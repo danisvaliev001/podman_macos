@@ -1,6 +1,6 @@
 # Installation podman on MacOS
 ## You can not just install Podman like Docker on MacOS or Windows. You can install official Podman client on MacOS. Podman server should be run on some Linux.
-## In this example, we will configure Podman client and configure Podman server installing Fedora via Vagrant to VirtualBox.
+## In this example, we will configure Podman client and configure Podman server installing Fedora via Vagrant to VirtualBox. You can use Podman absolutely locally.
 
 ### Create work dir:
 ```
