@@ -48,6 +48,8 @@ ssh-copy-id -i /Users/"${USER}"/.ssh/podman.pub -p 2222 vagrant@127.0.0.1
 
 #### Test SSH-connection and configure Podman Server:
 ```
+# password: vagrant
+
 ssh -p '2222' 'vagrant@127.0.0.1' systemctl --user enable podman.socket
 ssh -p '2222' 'vagrant@127.0.0.1' sudo loginctl enable-linger $USER
 ```
