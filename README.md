@@ -1,23 +1,25 @@
-# Installation podman on MacOS
-### You can not just install Podman like Docker on MacOS or Windows. You can install official Podman client on MacOS. Podman server should be run on some Linux.
-### In this example, we will configure Podman client and configure Podman server installing Fedora via Vagrant to VirtualBox. You can use Podman absolutely locally.
+# installation podman on MacOS
 
-#### Create work dir:
+you can not install Podman on MacOS via popular way as Brew or drag-and-dropping .app file to Applications dir, for example. You can install official Podman __client__ on MacOS, but podman server is another component and should be run on some Linux.
+
+so, let's start to configure Podman client and Podman server. We will configure Podman server installing Fedora via Vagrant to VirtualBox. So, in result, you will can use Podman absolutely locally.
+
+#### create work dir:
 ```
 mkdir fedora
 cd fedora
 ```
 
-#### Download and Install VirtualBox:
+#### download and Install VirtualBox:
 `brew install cask virtualbox`
 
-#### Install Vagrant:
+#### install Vagrant:
 `brew install cask vagrant`
 
-#### Install Podman:
+#### install Podman:
 `brew install podman`
 
-#### Create Vagrantfile
+#### create Vagrantfile
 ```
 cat <<EOF > Vagrantfile
 Vagrant.configure("2") do |config|
@@ -36,17 +38,17 @@ end
 EOF
 ```
 
-#### Start Vagrant:
+#### start Vagrant:
 `vagrant up`
 
-#### Create SSH-keys:
+#### create SSH-keys:
 ```
 rm -rf /Users/"${USER}"/.ssh/known_hosts    # ATTENTION!
 ssh-keygen -t rsa -b 4096 -C "podman" -f /Users/"${USER}"/.ssh/podman
 ssh-copy-id -i /Users/"${USER}"/.ssh/podman.pub -p 2222 vagrant@127.0.0.1
 ```
 
-#### Test SSH-connection and configure Podman Server:
+#### test SSH-connection and configure Podman server:
 ```
 # password: vagrant
 
@@ -54,15 +56,15 @@ ssh -p '2222' 'vagrant@127.0.0.1' systemctl --user enable podman.socket
 ssh -p '2222' 'vagrant@127.0.0.1' sudo loginctl enable-linger $USER
 ```
 
-#### Configure Podman client:
+#### configure Podman client:
 ```
 podman system connection list
 podman system connection add --identity /Users/"${USER}"/.ssh/podman podman ssh://vagrant@127.0.0.1:2222
 podman system connection list
 ```
 
-#### Test works:
+#### test works:
 `podman info`
 
-### Links:
+### links:
 https://www.redhat.com/sysadmin/podman-clients-macos-windows
